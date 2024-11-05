@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebView Example</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Prevent scrolling */
+        }
+
+        #container {
+            position: relative;
+            width: 100%;
+            height: 100vh; /* Full height of the viewport */
+            overflow: hidden; /* Prevent overflow */
+        }
+
+        #webview {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%; /* Normal width */
+            height: 100%; /* Normal height */
+            border: none; /* Remove border */
+            transition: transform 0.3s; /* Smooth transition */
+        }
+
+        .zoom {
+            width: 200%; /* Double the width to zoom in */
+            height: 200%; /* Double the height to zoom in */
+            transform: translate(-50%, 0); /* Move the view to the top right */
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <iframe id="webview" src="https://student.kletech.ac.in"></iframe>
+    </div>
+
+    <script>
+        const webview = document.getElementById('webview');
+
+        function updateIframeSize() {
+            if (window.innerWidth <= 768) { // Check if on mobile (adjust as needed)
+                webview.classList.add('zoom'); // Add zoom class for mobile
+            } else {
+                webview.classList.remove('zoom'); // Remove zoom class for larger screens
+            }
+        }
+
+        // Initial check
+        updateIframeSize();
+
+        // Adjust iframe size on window resize
+        window.addEventListener('resize', updateIframeSize);
+
+        // Listen for changes in the iframe's URL to remove zoom when navigating
+        webview.addEventListener('load', function() {
+            // Remove zoom class when the content changes
+            webview.classList.remove('zoom');
+        });
+    </script>
+</body>
+</html>
